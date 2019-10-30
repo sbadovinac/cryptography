@@ -4,7 +4,7 @@
 import java.io.*;
 import java.util.*;
 
-public class caesar
+public class polycypher
 {
     public static void main(String [] args)
 	throws IOException 
@@ -12,7 +12,7 @@ public class caesar
         // Variables
         String userInput;
         int length;
-        int shift = 0;
+        String key;
 
         // Get message to be encypted from user
         System.out.println("Enter a message for encryption:");
@@ -24,9 +24,9 @@ public class caesar
         int [] encryptedArray = new int[length];
 
         // Get the shift from user
-        System.out.println("\nEnter a shift value:");
+        System.out.println("\nEnter a shift key:");
         Scanner shiftInput = new Scanner(System.in); 
-        shift = shiftInput.nextInt();
+        key = shiftInput.nextLine();
         shiftInput.close();
         input.close();
 
@@ -36,7 +36,7 @@ public class caesar
             asciiArray[i] = (int)userInput.charAt(i);
         }
         
-        encryptedArray = encrypt(asciiArray, shift, length);
+        encryptedArray = encrypt(asciiArray, key, length);
         System.out.println("\nEncrypted Message:");
         for(int i = 0; i < length; i++)
         {
@@ -49,7 +49,7 @@ public class caesar
     }
 
     // do the cyper
-    public static int [] encrypt (int [] cypher, int shift, int length)
+    public static int [] encrypt (int [] cypher, String key, int length)
     {
         // Shift each character except for spaces
         for(int i = 0; i < length; i++)
