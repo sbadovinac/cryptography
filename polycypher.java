@@ -13,13 +13,13 @@ public class polycypher
         String userInput;
         int length;
         String key;
-
+        
         // Get message to be encypted from user
         System.out.println("Enter a message for encryption:");
         Scanner input = new Scanner(System.in); 
         userInput = input.nextLine();
         length = userInput.length();
-
+ 
         int [] asciiArray = new int[length];
         int [] encryptedArray = new int[length];
 
@@ -30,14 +30,20 @@ public class polycypher
         shiftInput.close();
         input.close();
 
+        // array to store shift values
+        int [] keyArray = new int [key.length()];
+
         // put input into ascii array
         for(int i = 0; i < length; i++)
-        {
             asciiArray[i] = (int)userInput.charAt(i);
-        }
+
+        // put key into array
+        for (int i = 0; i < key.length(); i++) 
+            keyArray[i] = (int)key.charAt(i) - 96;
         
-        encryptedArray = encrypt(asciiArray, key, length);
+        encryptedArray = encrypt(asciiArray, keyArray, length);
         System.out.println("\nEncrypted Message:");
+
         for(int i = 0; i < length; i++)
         {
             if (encryptedArray[i] == 32)
@@ -49,23 +55,31 @@ public class polycypher
     }
 
     // do the cyper
-    public static int [] encrypt (int [] cypher, String key, int length)
+    public static int [] encrypt (int [] cypher, int [] key, int length)
     {
-        // Shift each character except for spaces
-        for(int i = 0; i < length; i++)
-            if (cypher[i] != 32 && cypher[i] + shift < 123)
-                cypher[i] += shift;
-            // if the shift increases the ascii value past z, wrap around to a
-            else if (cypher[i] != 32 && cypher[i] + shift > 122)
+        int shiftIndex = 0; // holds place of value in shift key being used
+        for (int i = 0; i < cypher.length; i++)
+        {
+            if (shiftIndex % key.length == 0 && shiftIndex != 0)
+                shiftIndex = 0;
+            if (cypher[i] != 32 && cypher[i] + key[shiftIndex] < 123)
+            {
+               cypher[i] += key[shiftIndex];
+               shiftIndex++;
+            }
+            else if (cypher[i] != 32 && cypher[i] + key[shiftIndex] > 122) 
             {
                 int newSpot;
-                newSpot =  (cypher[i] + shift) - 122;
+                newSpot = (cypher[i] + key[shiftIndex]) - 122;
                 cypher[i] = newSpot + 96;
+                shiftIndex++;
             }
-            // dont shift the spaces 
+            // dont shift the spaces
             else
-                cypher[i] = 32;
+                cypher[i] = 32; 
+            
+        } 
+        return cypher;
 
-        return cypher;   
     }
 }
