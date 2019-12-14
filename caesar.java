@@ -13,14 +13,15 @@ public class caesar
         String userInput;
         int length;
         int shift = 0;
-        int asciiArray[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        int encryptedArray[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
         // Get message to be encypted from user
         System.out.println("Enter a message for encryption:");
         Scanner input = new Scanner(System.in); 
         userInput = input.nextLine();
         length = userInput.length();
+		
+		int asciiArray [] = new int[length];
+		int encryptedArray [] = new int[length];
 
         // Get the shift from user
         System.out.println("\nEnter a shift value:");
