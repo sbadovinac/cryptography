@@ -3,6 +3,7 @@
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.Random;
 
 public class subTrans
 {
@@ -26,7 +27,9 @@ public class subTrans
         for(int i = 0; i < length; i++)
             asciiArray[i] = (int)userInput.charAt(i);
         
-        //encryptedArray = encrypt(asciiArray);
+        input.close();
+        
+        encryptedArray = encrypt(asciiArray);
         System.out.println("\nEncrypted Message:");
 
         for(int i = 0; i < length; i++)
@@ -40,13 +43,42 @@ public class subTrans
     }
 
     // Encrypt the message using a combination of substitution and transposition
-    public int [] encrypt (int [] cipher)
+    public static int [] encrypt (int [] cipher)
     {
-        // local variables
-        int length = cipher.length;
-
         // array to hold substitution values
-        int [] asciiArray = new int[27];
+        table [] tableArray = new table[55];
+        tableArray[0] = new table(32, 136);
+
+        // fill table array
+        for (int i = 1; i < 55; i++)
+        {
+            // fill the lower case ascii entries
+            if (i < 28)
+            {
+                tableArray[i] = new table(i + 96, i + 32);
+                //System.out.println(tableArray[i].cipherVal);
+            }
+            // fill the upper case ascii entries
+            else
+            {
+                tableArray[i] = new table(i + 36, 154 - i);  
+                //System.out.println(tableArray[i].cipherVal);  
+            }
+        }
+
+        // do substitution cypher
+        for (int i = 0; i < cipher.length; i++)
+        {
+            // dont encrypt spaces
+            if (cipher[i] == 32)
+                continue;
+            // encrypt lower case letters
+            if (cipher[i] > 96 && cipher[i] < 123)
+                cipher[i] = tableArray[cipher[i] - 96].cipherVal;
+            // encrypt upper case letters
+            else
+                cipher[i] = tableArray[cipher[i] - 36].cipherVal;
+        }
 
         return cipher;
     }

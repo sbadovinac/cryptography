@@ -4,9 +4,9 @@ class table
     int realVal;
     int cipherVal;
 
-    table()
+    table(int RealVal, int CipherVal)
     {
-        realVal = 0;
-        cipherVal = 0;
+        realVal = RealVal;
+        cipherVal = CipherVal;
     }
 }
