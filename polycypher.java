@@ -1,5 +1,5 @@
 // Sam Badovinac
-// Caesar cypher
+// Polyalhabetic cypher
 
 import java.io.*;
 import java.util.*;
