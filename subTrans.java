@@ -9,11 +9,9 @@ public class subTrans
     public static void main(String [] args)
 	{
         // Variables
-        String userInput;
+        String userInput;        
         int length;
-        String key;
-        
-        
+
         // Get message to be encypted from user
         System.out.println("Enter a message for encryption:");
         Scanner input = new Scanner(System.in); 
@@ -24,25 +22,11 @@ public class subTrans
         int [] asciiArray = new int[length];
         int [] encryptedArray = new int[length];
 
-        // Get the shift from user
-        System.out.println("\nEnter a shift key:");
-        Scanner shiftInput = new Scanner(System.in); 
-        key = shiftInput.nextLine();
-        shiftInput.close();
-        input.close();
-
-        // array to store shift values
-        int [] keyArray = new int [key.length()];
-
         // put input into ascii array
         for(int i = 0; i < length; i++)
             asciiArray[i] = (int)userInput.charAt(i);
-
-        // put key into array
-        for (int i = 0; i < key.length(); i++) 
-            keyArray[i] = (int)key.charAt(i) - 96;
         
-        //encryptedArray = encrypt(asciiArray, keyArray, length);
+        //encryptedArray = encrypt(asciiArray);
         System.out.println("\nEncrypted Message:");
 
         for(int i = 0; i < length; i++)
@@ -53,5 +37,17 @@ public class subTrans
                 System.out.print((char)encryptedArray[i]);
         }
         System.out.println(" ");
+    }
+
+    // Encrypt the message using a combination of substitution and transposition
+    public int [] encrypt (int [] cipher)
+    {
+        // local variables
+        int length = cipher.length;
+
+        // array to hold substitution values
+        int [] asciiArray = new int[27];
+
+        return cipher;
     }
 }
