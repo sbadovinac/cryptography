@@ -80,6 +80,71 @@ public class subTrans
                 cipher[i] = tableArray[cipher[i] - 36].cipherVal;
         }
 
+        cipher = transpose(cipher);
+
         return cipher;
+    }
+
+    public static int [] transpose(int [] cipher)
+    {
+        // local variables 
+        int rows;
+        int length = cipher.length;
+        // Calculate number of rows
+        if (length <= 5)
+            rows = 1;
+        else
+        {
+            if (length % 5 == 0)
+                rows = length / 5;
+            else
+                rows = (length / 5) + 1;
+        }
+        System.out.println("Rows: " + rows);
+        // graph to hold transpose shifting things
+        int [][] graph = new int[rows][5];
+        int [][] transGraph = new int[rows][5];
+        // fill graph with initial values
+        for (int x = 0; x < rows; x++)
+            for (int y = 0; y < 5; y++)
+            {
+                // fill first row
+                if ((5 * x) + y >= length)
+                    graph[x][y] = 63;
+                else
+                    graph[x][y] = cipher[(5 * x) + y];
+            }
+        System.out.println("Initial Graph: ");
+        printGraph(graph, rows);
+        
+        // transposition keyword: 31402
+        for (int y = 0; y < 5; y++)
+            for (int x = 0; x < rows; x++)
+            {
+                if (y == 0)
+                    transGraph[x][y] = graph[x][3];
+                else if (y == 1)
+                    transGraph[x][y] = graph[x][1];
+                else if (y == 2)
+                    transGraph[x][y] = graph[x][4];
+                else if (y == 3)
+                    transGraph[x][y] = graph[x][0];
+                else
+                    transGraph[x][y] = graph[x][2];
+            }
+        
+        System.out.println("\n\nTransposed Graph: ");
+        printGraph(transGraph, rows);
+        return cipher;
+    }
+
+    public static void printGraph(int [][] graph, int rows)
+    {
+        for (int x = 0; x < rows; x++)
+        {
+            System.out.println(" ");
+            for (int y = 0; y < 5; y++)
+                System.out.print(graph[x][y] + " ");
+        }
     }
 }
