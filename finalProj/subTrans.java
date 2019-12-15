@@ -90,6 +90,7 @@ public class subTrans
         // local variables 
         int rows;
         int length = cipher.length;
+        int cipherIndex = 0;
         // Calculate number of rows
         if (length <= 5)
             rows = 1;
@@ -104,6 +105,7 @@ public class subTrans
         // graph to hold transpose shifting things
         int [][] graph = new int[rows][5];
         int [][] transGraph = new int[rows][5];
+        int [] finalArr = new int[5 * rows];
         // fill graph with initial values
         for (int x = 0; x < rows; x++)
             for (int y = 0; y < 5; y++)
@@ -118,6 +120,7 @@ public class subTrans
         printGraph(graph, rows);
         
         // transposition keyword: 31402
+        // Shift the graph 
         for (int y = 0; y < 5; y++)
             for (int x = 0; x < rows; x++)
             {
@@ -135,7 +138,16 @@ public class subTrans
         
         System.out.println("\n\nTransposed Graph: ");
         printGraph(transGraph, rows);
-        return cipher;
+
+        // encrypt cipher according to transGraph
+        for (int y = 0; y < 5; y++)
+            for (int x = 0; x < rows; x++)
+            {
+                finalArr[cipherIndex] = transGraph[x][y];
+                cipherIndex++;
+            }
+        
+        return finalArr;
     }
 
     public static void printGraph(int [][] graph, int rows)
